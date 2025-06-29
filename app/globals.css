@@ -1,26 +1,218 @@
-@import "tailwindcss";
-
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
+/* ======================= */
+/* Base Tailwind Imports with Font Enforcement */
+/* ======================= */
+@layer base {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    font-size: 16px !important;
+  }
+  
+  /* Nuclear option for Bebas Neue */
+  .font-bebas {
+    font-family: 'Bebas Neue', sans-serif !important;
+    font-weight: 400 !important;
+    letter-spacing: 0.05em !important;
+    -webkit-font-smoothing: subpixel-antialiased;
+    text-rendering: geometricPrecision;
+  }
+
+  /* Global link styling */
+  a {
+    color: inherit !important;
+    text-decoration: none !important;
+  }
+  
+  a:hover,
+  a:focus,
+  a:active,
+  a:visited {
+    color: inherit !important;
+    text-decoration: none !important;
   }
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ======================= */
+/* Enhanced Font Face with Performance */
+/* ======================= */
+@font-face {
+  font-family: 'Bebas Neue';
+  src: 
+    url('/fonts/BebasNeue-Regular.woff2') format('woff2'),
+    url('/fonts/BebasNeue-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: block; /* Critical change from swap to block */
+  unicode-range: U+000-5FF;
+}
+
+/* ======================= */
+/* Extreme Text Size Utilities */
+/* ======================= */
+@layer utilities {
+  /* Absolute sizes with viewport fallbacks */
+  .text-giga {
+    font-size: 15rem !important;
+    line-height: 0.8 !important;
+  }
+  
+  /* Fluid sizes that dominate the viewport */
+  .text-colossal {
+    font-size: clamp(6rem, 25vw, 25rem) !important;
+    line-height: 0.75 !important;
+    letter-spacing: -0.03em !important;
+  }
+  
+  /* Enhanced canvas text visibility */
+  .text-over-canvas {
+    text-shadow: 
+      0 2px 10px rgba(0,0,0,0.9),
+      0 4px 20px rgba(0,0,0,0.5);
+    -webkit-text-stroke: 0.5px rgba(0,0,0,0.5);
+    paint-order: stroke fill;
+  }
+  
+  /* Fix for font loading flash */
+  .font-loading-fix {
+    visibility: hidden;
+  }
+  .font-loaded .font-loading-fix {
+    visibility: visible;
+  }
+
+  /* Force white text for specific components */
+  .force-white-text {
+    color: white !important;
+  }
+  .force-white-text a {
+    color: white !important;
+  }
+}
+
+/* ======================= */
+/* Core Layout Structure */
+/* ======================= */
+:root {
+  --background: #000000;
+  --foreground: #ffffff;
+}
+
+html,
+body,
+#__next {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overscroll-behavior: none;
+  font-size: 100% !important;
+}
+
+/* ======================= */
+/* Three.js Canvas System */
+/* ======================= */
+.three-scene {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  transform: translateZ(0); /* GPU layer */
+}
+
+.three-scene canvas {
+  display: block;
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+}
+
+/* ======================= */
+/* Content Layer System */
+/* ======================= */
+.content-layer {
+  position: relative;
+  z-index: 10;
+  height: 100vh;
+  width: 100vw;
+  transform-style: preserve-3d;
+  color: white; /* Ensures text color inheritance */
+}
+
+/* ======================= */
+/* Text Rendering Enhancements */
+/* ======================= */
 body {
-  background: var(--background);
-  color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  color: var(--foreground);
+  overflow: hidden;
+  background: var(--background);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* ======================= */
+/* Font Loading Management */
+/* ======================= */
+.font-loading body {
+  opacity: 0;
+}
+.font-loaded body {
+  opacity: 1;
+  transition: opacity 0.3s ease;
+}
+
+/* ======================= */
+/* Debugging Tools */
+/* ======================= */
+.debug-text-size {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 9999;
+  background: rgba(0,0,0,0.8);
+  color: white;
+  padding: 10px;
+  font-family: monospace;
+  pointer-events: none;
+}
+
+/* ======================= */
+/* Scroll Snap Enhancements */
+/* ======================= */
+.snap-system {
+  scroll-snap-type: y mandatory;
+  overflow-y: auto;
+  height: 100vh;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.snap-section {
+  scroll-snap-align: start;
+  height: 100vh;
+  width: 100vw;
+  position: relative;
+}
+
+/* ======================= */
+/* Chapter Card Specific Styling */
+/* ======================= */
+.chapter-card,
+.chapter-card * {
+  color: inherit !important;
+  text-decoration: none !important;
+}
+
+.chapter-card:hover,
+.chapter-card:focus,
+.chapter-card:active,
+.chapter-card:visited {
+  color: inherit !important;
+  text-decoration: none !important;
 }
